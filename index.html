@@ -5,26 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Saujana Film Lab</title>
   <meta name="description" content="Saujana Film Lab is coming soon. Find our Kuala Lumpur and Bali labs here." />
-  <meta property="og:title" content="Saujana Film Lab" />
-  <meta property="og:description" content="Film developing, scanning, supplies, and cameras in Kuala Lumpur and Bali." />
-  <meta property="og:image" content="dd-icon.png" />
-  <link rel="icon" type="image/png" href="dd-icon.png" />
-  <link rel="apple-touch-icon" href="dd-icon.png" />
+  <link rel="icon" type="image/png" href="saujanafilmgang.png" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --black: #090909;
-      --charcoal: #131313;
-      --panel: #181818;
-      --line: #2b2925;
       --muted: #8b8680;
-      --dim: #5d5953;
-      --paper: #f1eee8;
       --gold: #c8922a;
       --gold-soft: rgba(200, 146, 42, 0.14);
       --green: #8fa88a;
+      --line: #2b2925;
+      --paper: #f1eee8;
     }
 
     body {
@@ -36,7 +29,6 @@
       color: var(--paper);
       font-family: "Montserrat", sans-serif;
       font-weight: 300;
-      letter-spacing: 0;
     }
 
     a { color: inherit; text-decoration: none; }
@@ -51,6 +43,7 @@
         linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
       background-size: 3px 3px;
       mix-blend-mode: screen;
+      z-index: 1;
     }
 
     .frame {
@@ -58,10 +51,11 @@
       display: grid;
       grid-template-rows: auto 1fr auto;
       padding: 28px;
+      position: relative;
+      z-index: 2;
     }
 
-    .topbar,
-    .footer {
+    .topbar, .footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -72,12 +66,7 @@
       text-transform: uppercase;
     }
 
-    .logo {
-      width: min(180px, 48vw);
-      height: auto;
-      object-fit: contain;
-      filter: brightness(1.08);
-    }
+    .logo { width: min(180px, 48vw); height: auto; object-fit: contain; filter: brightness(1.08); }
 
     main {
       width: min(1120px, 100%);
@@ -89,13 +78,7 @@
       align-items: center;
     }
 
-    .eyebrow {
-      color: var(--gold);
-      font-size: 10px;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      margin-bottom: 22px;
-    }
+    .eyebrow { color: var(--gold); font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; margin-bottom: 22px; }
 
     h1 {
       max-width: 680px;
@@ -107,12 +90,7 @@
       margin-bottom: 24px;
     }
 
-    .lead {
-      max-width: 580px;
-      color: #cfc9c0;
-      font-size: 15px;
-      line-height: 1.9;
-    }
+    .lead { max-width: 580px; color: #cfc9c0; font-size: 15px; line-height: 1.9; }
 
     .status {
       display: inline-flex;
@@ -137,10 +115,7 @@
       box-shadow: 0 0 18px rgba(143,168,138,0.7);
     }
 
-    .labs {
-      display: grid;
-      gap: 14px;
-    }
+    .labs { display: grid; gap: 14px; }
 
     .lab {
       border: 1px solid var(--line);
@@ -149,29 +124,11 @@
       padding: 24px;
     }
 
-    .lab-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
+    .lab-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px; }
 
-    .city {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 34px;
-      line-height: 1;
-      font-weight: 300;
-      font-style: italic;
-    }
+    .city { font-family: "Cormorant Garamond", serif; font-size: 34px; line-height: 1; font-weight: 300; font-style: italic; }
 
-    .country {
-      color: var(--muted);
-      font-size: 9px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-top: 7px;
-    }
+    .country { color: var(--muted); font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; margin-top: 7px; }
 
     .tag {
       color: var(--gold);
@@ -184,18 +141,9 @@
       white-space: nowrap;
     }
 
-    .meta {
-      color: #c6beb3;
-      font-size: 12px;
-      line-height: 1.75;
-      margin-bottom: 18px;
-    }
+    .meta { color: #c6beb3; font-size: 12px; line-height: 1.75; margin-bottom: 18px; }
 
-    .actions {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-    }
+    .actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 
     .action {
       border: 1px solid var(--line);
@@ -209,38 +157,15 @@
       transition: border-color 160ms ease, transform 160ms ease, background 160ms ease;
     }
 
-    .action:hover {
-      transform: translateY(-1px);
-      border-color: rgba(200,146,42,0.62);
-      background: #151515;
-    }
+    .action:hover { transform: translateY(-1px); border-color: rgba(200,146,42,0.62); background: #151515; }
 
-    .action strong {
-      display: block;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
+    .action strong { display: block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 4px; }
 
-    .action span {
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.35;
-      overflow-wrap: anywhere;
-    }
+    .action span { display: block; color: var(--muted); font-size: 11px; line-height: 1.35; overflow-wrap: anywhere; }
 
-    .arrow {
-      color: var(--gold);
-      font-size: 16px;
-      flex: 0 0 auto;
-    }
+    .arrow { color: var(--gold); font-size: 16px; flex: 0 0 auto; }
 
-    .footer {
-      border-top: 1px solid var(--line);
-      padding-top: 22px;
-    }
+    .footer { border-top: 1px solid var(--line); padding-top: 22px; }
 
     @media (max-width: 860px) {
       .frame { padding: 22px; }
@@ -294,9 +219,6 @@
             <a class="action" href="https://maps.app.goo.gl/UV6F17TZtRTTgCM9A" target="_blank" rel="noopener">
               <span><strong>Location</strong><span>Open in Maps</span></span><span class="arrow">-></span>
             </a>
-            <a class="action" href="https://scans.saujanalab.com" target="_blank" rel="noopener">
-              <span><strong>Scans</strong><span>Customer delivery page</span></span><span class="arrow">-></span>
-            </a>
           </div>
         </article>
 
@@ -309,8 +231,8 @@
             <span class="tag">Bali Lab</span>
           </div>
           <p class="meta">
-            Saujana Film Lab Bali<br />
-            Film developing, scanning, supplies, cameras, and order support
+            Jl. Pantai Batu Bolong No.40b, Canggu, Kec. Kuta Utara, Kabupaten Badung, Bali 80361<br />
+            Working hours: 11am-8pm, closed every Sunday
           </p>
           <div class="actions">
             <a class="action" href="https://www.instagram.com/saujanabali" target="_blank" rel="noopener">
@@ -318,9 +240,6 @@
             </a>
             <a class="action" href="https://wa.me/6282251318377" target="_blank" rel="noopener">
               <span><strong>WhatsApp</strong><span>+62 822 5131 8377</span></span><span class="arrow">-></span>
-            </a>
-            <a class="action" href="https://bali-scans.saujanalab.com" target="_blank" rel="noopener">
-              <span><strong>Scans</strong><span>Bali delivery page</span></span><span class="arrow">-></span>
             </a>
             <a class="action" href="mailto:hello@saujanalab.com">
               <span><strong>Email</strong><span>hello@saujanalab.com</span></span><span class="arrow">-></span>
