@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saujana Film Lab Bali Policy</title>
+  <meta name="description" content="Film handling, scan delivery, negative storage, turnaround, and care guidelines for Saujana Film Lab Bali." />
+  <meta property="og:title" content="Saujana Film Lab Bali Policy" />
+  <meta property="og:description" content="A practical guide to how we handle film, scans, negatives, turnaround times, and the beautifully unpredictable nature of analog work." />
+  <meta property="og:image" content="https://saujanalab.com/saujanafilmgang.png" />
+  <meta property="og:url" content="https://saujanalab.com/policy/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="saujanafilmgang.png" />
+  <link rel="apple-touch-icon" href="saujanafilmgang.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #090909;
+      --charcoal: #121212;
+      --panel: #181818;
+      --line: #2b2925;
+      --muted: #8b8680;
+      --dim: #5d5953;
+      --paper: #f1eee8;
+      --gold: #c8922a;
+      --gold-soft: rgba(200, 146, 42, 0.14);
+      --green: #8fa88a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(9,9,9,0.78), rgba(9,9,9,0.97)),
+        radial-gradient(circle at 18% 9%, rgba(200,146,42,0.12), transparent 28%),
+        var(--black);
+      color: var(--paper);
+      font-family: "Montserrat", sans-serif;
+      font-weight: 300;
+      letter-spacing: 0;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.13;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 3px 3px;
+      mix-blend-mode: screen;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .frame {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 30px 0 54px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 28px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+    }
+
+    .logo {
+      width: min(220px, 56vw);
+      height: auto;
+      filter: brightness(1.08);
+    }
+
+    .hero {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 54px 0 42px;
+      display: grid;
+      grid-template-columns: 1.04fr 0.96fr;
+      gap: 42px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(54px, 8vw, 104px);
+      line-height: 0.88;
+      font-weight: 300;
+      font-style: italic;
+      max-width: 700px;
+      margin-bottom: 24px;
+    }
+
+    .lead {
+      max-width: 640px;
+      color: #cfc9c0;
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .note-card {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--gold);
+      background: linear-gradient(180deg, rgba(24,24,24,0.92), rgba(17,17,17,0.92));
+      padding: 24px;
+      color: #cfc9c0;
+      font-size: 13px;
+      line-height: 1.85;
+    }
+
+    .note-card strong {
+      color: var(--paper);
+      font-weight: 500;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 28px;
+      margin-top: 28px;
+      align-items: start;
+    }
+
+    .toc {
+      position: sticky;
+      top: 22px;
+      border: 1px solid var(--line);
+      background: rgba(18,18,18,0.88);
+      padding: 20px;
+    }
+
+    .toc-title {
+      color: var(--gold);
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .toc a {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.45;
+      padding: 8px 0;
+      border-top: 1px solid rgba(255,255,255,0.045);
+    }
+
+    .toc a:hover { color: var(--paper); }
+
+    .policy {
+      display: grid;
+      gap: 12px;
+    }
+
+    section {
+      scroll-margin-top: 24px;
+      border: 1px solid var(--line);
+      background: rgba(20,20,20,0.82);
+      padding: 24px;
+    }
+
+    .section-head {
+      display: flex;
+      gap: 14px;
+      align-items: baseline;
+      margin-bottom: 14px;
+    }
+
+    .num {
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      flex: 0 0 auto;
+    }
+
+    h2 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    p, li {
+      color: #c9c2b8;
+      font-size: 13px;
+      line-height: 1.85;
+    }
+
+    p + p, ul + p, p + ul { margin-top: 12px; }
+
+    ul {
+      list-style: none;
+      display: grid;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    li {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.82em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .finale {
+      border-color: var(--line);
+      background: transparent;
+      text-align: center;
+      padding: 28px 24px 18px;
+    }
+
+    .suksma-mark {
+      display: block;
+      width: min(170px, 54vw);
+      height: auto;
+      margin: 0 auto 10px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      border-top: 1px solid var(--line);
+      margin-top: 34px;
+      padding-top: 22px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .frame { width: min(100% - 36px, 1120px); padding-top: 22px; }
+      .topbar, .footer { align-items: flex-start; flex-direction: column; letter-spacing: 0.18em; }
+      .hero { grid-template-columns: 1fr; padding: 42px 0 32px; gap: 24px; }
+      h1 { font-size: clamp(52px, 16vw, 82px); }
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: static; }
+      section { padding: 20px; }
+      .section-head { display: block; }
+      .num { display: block; margin-bottom: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <header class="topbar">
+      <a href="https://saujanalab.com/" aria-label="Saujana Film Lab home">
+        <img class="logo" src="saujana-bali-logo.png" alt="Saujana Film Lab Bali" />
+      </a>
+      <span>Film handling policy / care guidelines</span>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Before the first bath</p>
+          <h1>Film Handling Policy & Care Guidelines</h1>
+          <p class="lead">
+            At Saujana Film Lab Bali, every roll is handled with care through developing, scanning, and storage.
+            Film is physical, chemical, mechanical, and occasionally beautifully stubborn, so these guidelines
+            explain what we can control, what we cannot, and how we keep the process honest.
+          </p>
+        </div>
+        <div class="note-card">
+            <p><strong>Quick note:</strong> by submitting film to Saujana Film Lab Bali, customers confirm that they have read, understood, and accepted these guidelines.</p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <nav class="toc" aria-label="Policy sections">
+          <p class="toc-title">Contents</p>
+          <a href="#handling">01 Film Handling & Liability</a>
+          <a href="#condition">02 Film Condition</a>
+          <a href="#results">03 Development Results</a>
+          <a href="#styles">04 Scan Styles</a>
+          <a href="#files">05 Scan Files</a>
+          <a href="#storage">06 Negative Storage</a>
+          <a href="#return">07 Return & Disposal</a>
+          <a href="#turnaround">08 Turnaround Time</a>
+          <a href="#push-pull">09 Push/Pull Requests</a>
+          <a href="#commercial">10 Commercial Work</a>
+          <a href="#agreement">11 Agreement</a>
+        </nav>
+
+        <div class="policy">
+          <section id="handling">
+            <div class="section-head"><span class="num">01</span><h2>Film Handling & Liability</h2></div>
+            <p>We handle all films with the utmost care throughout the developing, scanning, and storage process. However, in the unlikely event of damage or loss caused directly by our processing, Saujana Film Lab's liability is limited to the replacement value of an unexposed roll of film of a similar type.</p>
+            <p>Saujana Film Lab is not responsible for the irreplaceable emotional, artistic, or commercial value of the images contained within the film.</p>
+          </section>
+
+          <section id="condition">
+            <div class="section-head"><span class="num">02</span><h2>Film Condition & Pre-existing Issues</h2></div>
+            <p>Customers are responsible for ensuring that their films have been properly stored and handled before submission.</p>
+            <p>Saujana Film Lab is not responsible for issues caused by pre-existing film conditions, including but not limited to:</p>
+            <ul>
+              <li>Expired or improperly stored film</li>
+              <li>Heat or humidity damage</li>
+              <li>X-ray or security scanning exposure during travel</li>
+              <li>Light leaks</li>
+              <li>Camera malfunction</li>
+              <li>Improper exposure</li>
+              <li>Underexposure or overexposure</li>
+              <li>Age-related deterioration</li>
+              <li>Manufacturing defects</li>
+            </ul>
+            <p>These conditions may affect the final image quality and cannot be corrected through processing.</p>
+          </section>
+
+          <section id="results">
+            <div class="section-head"><span class="num">03</span><h2>Film Development Results</h2></div>
+            <p>Film is an analog medium, and every roll behaves differently. Variations in color, grain, contrast, density, and image characteristics are part of the natural film process.</p>
+            <p>Saujana Film Lab does not guarantee specific colors, tones, or image outcomes.</p>
+          </section>
+
+          <section id="styles">
+            <div class="section-head"><span class="num">04</span><h2>Scan Styles</h2></div>
+            <p>Saujana Film Lab offers several scan styles to accommodate different preferences. These styles are based on scanner rendering settings and are applied during the scanning process.</p>
+            <p>Please note that scan styles are not manual edits or filters applied to individual images. The final appearance of a scan is influenced by the film stock, exposure, lighting conditions, and the characteristics of the original negative.</p>
+            <p>As with all film scanning, variations in color, contrast, and overall rendering are a natural part of the process.</p>
+          </section>
+
+          <section id="files">
+            <div class="section-head"><span class="num">05</span><h2>Scan Files & Digital Delivery</h2></div>
+            <p>Customers are responsible for downloading and backing up their digital scan files after delivery.</p>
+            <p>Saujana Film Lab will store digital scan files for 7 days from the delivery date. After this period, files may be permanently deleted without prior notice.</p>
+          </section>
+
+          <section id="storage">
+            <div class="section-head"><span class="num">06</span><h2>Negative Storage & Collection</h2></div>
+            <p>Processed negatives will be stored for 7 days after the customer has been notified that their order is ready.</p>
+            <p>Customers are encouraged to collect their negatives promptly. Negatives that remain uncollected beyond the stated storage period may be discarded by Saujana Film Lab without further notice.</p>
+          </section>
+
+          <section id="return">
+            <div class="section-head"><span class="num">07</span><h2>Negative Return & Disposal Options</h2></div>
+            <p>Customers may choose one of the following options:</p>
+            <ul>
+              <li>Return uncut negatives</li>
+              <li>Return cut negatives</li>
+              <li>Discard negatives after scanning</li>
+            </ul>
+            <p>By selecting the discard option, customers acknowledge that the original film materials cannot be recovered after disposal.</p>
+          </section>
+
+          <section id="turnaround">
+            <div class="section-head"><span class="num">08</span><h2>Turnaround Time</h2></div>
+            <p>Estimated turnaround times are provided as a guideline and may vary depending on order volume, queue, machine maintenance, technical issues, or other circumstances beyond our control.</p>
+            <p>General turnaround times are as follows:</p>
+            <ul>
+              <li>C-41 color negative film: approximately 2-3 hours</li>
+              <li>Black & White film: approximately 2-3 days</li>
+              <li>ECN-2 film: approximately 2-3 days</li>
+            </ul>
+            <p>Orders may require additional time during peak periods or when special handling is required. Saujana Film Lab will always aim to complete your film as soon as possible while maintaining the highest quality of processing.</p>
+          </section>
+
+          <section id="push-pull">
+            <div class="section-head"><span class="num">09</span><h2>Push/Pull Development & Special Requests</h2></div>
+            <p>Push and pull development services are available for Black & White and ECN-2 films upon customer request.</p>
+            <p>For C-41 color negative films, push or pull development is generally not recommended due to the potential for unpredictable color shifts, changes in contrast, and increased grain. However, Saujana Film Lab may accommodate such requests for experienced photographers who understand the risks and desired outcomes.</p>
+            <p>This policy applies to the development process only. Customers are free to expose their films at different ISO ratings during shooting according to their creative intent. However, any request to alter the standard development process should be clearly communicated to Saujana Film Lab at the time of submission.</p>
+            <p>Due to the experimental nature of push/pull development, Saujana Film Lab does not guarantee specific image results.</p>
+          </section>
+
+          <section id="commercial">
+            <div class="section-head"><span class="num">10</span><h2>Commercial & Professional Work</h2></div>
+            <p>Customers submitting films for professional, commercial, or irreplaceable projects are encouraged to discuss their requirements with our team before processing.</p>
+            <p>While we handle all films with the utmost care, Saujana Film Lab cannot be held responsible for indirect financial losses, lost business opportunities, or consequential damages resulting from film or image issues.</p>
+          </section>
+
+          <section id="agreement">
+            <div class="section-head"><span class="num">11</span><h2>Agreement</h2></div>
+            <p>By submitting film to Saujana Film Lab, customers confirm that they have read, understood, and accepted this Film Handling Policy & Care Guidelines.</p>
+          </section>
+
+          <section class="finale">
+            <img class="suksma-mark" src="suksma-for-saujana.png" alt="Suksma" />
+            <p>For keeping film alive.</p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span>Saujana Film Lab</span>
+      <span>Policy / Care Guidelines</span>
+    </footer>
+  </div>
+</body>
+</html>
