@@ -1,269 +1,251 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Saujana Film Lab</title>
-  <meta name="description" content="All for the love of film. Find our KL and Bali labs right here." />
-
-  <!-- Website Thumbnail for Link Previews (WhatsApp, iMessage, Social Media) -->
-  <meta property="og:title" content="Saujana Film Lab" />
-  <meta property="og:description" content="All for the love of film. Find our KL and Bali labs right here." />
-  <meta property="og:image" content="https://saujanalab.com/saujanaicon.png?v=1" />
-  <meta property="og:url" content="https://saujanalab.com/" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <!-- Favicon for Browser Tabs -->
-  <link rel="icon" type="image/png" href="favicon.png?v=3" />
-  <link rel="apple-touch-icon" href="favicon.png?v=3" />
-
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --black: #090909;
-      --muted: #8b8680;
-      --gold: #c8922a;
-      --gold-soft: rgba(200, 146, 42, 0.14);
-      --green: #8fa88a;
-      --line: #2b2925;
-      --paper: #f1eee8;
-    }
-    body {
-      min-height: 100vh;
-      background:
-        linear-gradient(180deg, rgba(9,9,9,0.74), rgba(9,9,9,0.96)),
-        radial-gradient(circle at 22% 12%, rgba(200,146,42,0.11), transparent 28%),
-        var(--black);
-      color: var(--paper);
-      font-family: "Montserrat", sans-serif;
-      font-weight: 300;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    .grain {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.16;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-      background-size: 3px 3px;
-      mix-blend-mode: screen;
-      z-index: 1;
-    }
-
-    .frame {
-      min-height: 100vh;
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      padding: 28px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .topbar, .footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      color: var(--muted);
-      font-size: 10px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-    }
-
-    .logo { width: min(180px, 48vw); height: auto; object-fit: contain; filter: brightness(1.08); }
-
-    main {
-      width: min(1120px, 100%);
-      margin: 0 auto;
-      padding: 58px 0 46px;
-      display: grid;
-      grid-template-columns: 1.02fr 0.98fr;
-      gap: 42px;
-      align-items: center;
-    }
-
-    .eyebrow { color: var(--gold); font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; margin-bottom: 22px; }
-
-    h1 {
-      max-width: 680px;
-      font-family: "Cormorant Garamond", serif;
-      font-size: clamp(58px, 9vw, 116px);
-      line-height: 0.86;
-      font-weight: 300;
-      font-style: italic;
-      margin-bottom: 24px;
-    }
-
-    .lead { max-width: 580px; color: #cfc9c0; font-size: 15px; line-height: 1.9; }
-
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 34px;
-      padding: 11px 14px;
-      border: 1px solid var(--line);
-      background: rgba(24,24,24,0.74);
-      color: var(--muted);
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-    }
-
-    .status::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      background: var(--green);
-      border-radius: 999px;
-      box-shadow: 0 0 18px rgba(143,168,138,0.7);
-    }
-
-    .labs { display: grid; gap: 14px; }
-
-    .lab {
-      border: 1px solid var(--line);
-      border-left: 3px solid var(--gold);
-      background: linear-gradient(180deg, rgba(24,24,24,0.92), rgba(17,17,17,0.92));
-      padding: 24px;
-    }
-
-    .lab-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px; }
-
-    .city { font-family: "Cormorant Garamond", serif; font-size: 34px; line-height: 1; font-weight: 300; font-style: italic; }
-
-    .country { color: var(--muted); font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; margin-top: 7px; }
-
-    .tag {
-      color: var(--gold);
-      border: 1px solid rgba(200,146,42,0.34);
-      background: var(--gold-soft);
-      padding: 6px 8px;
-      font-size: 9px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .meta { color: #c6beb3; font-size: 12px; line-height: 1.75; margin-bottom: 18px; }
-
-    .actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-
-    .action {
-      border: 1px solid var(--line);
-      background: #101010;
-      min-height: 52px;
-      padding: 11px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      transition: border-color 160ms ease, transform 160ms ease, background 160ms ease;
-    }
-
-    .action:hover { transform: translateY(-1px); border-color: rgba(200,146,42,0.62); background: #151515; }
-
-    .action strong { display: block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 4px; }
-
-    .action span { display: block; color: var(--muted); font-size: 11px; line-height: 1.35; overflow-wrap: anywhere; }
-
-    .arrow { color: var(--gold); font-size: 16px; flex: 0 0 auto; }
-
-    .footer { border-top: 1px solid var(--line); padding-top: 22px; }
-
-    @media (max-width: 860px) {
-      .frame { padding: 22px; }
-      .topbar, .footer { align-items: flex-start; flex-direction: column; letter-spacing: 0.18em; }
-      main { grid-template-columns: 1fr; padding: 42px 0 34px; gap: 34px; }
-      h1 { font-size: clamp(54px, 17vw, 82px); }
-      .actions { grid-template-columns: 1fr; }
-      .lab { padding: 20px; }
-    }
-  </style>
-</head>
-<body>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="frame">
-    <header class="topbar">
-      <img class="logo" src="saujana-logo.png" alt="Saujana Film Lab" />
-      <span>Develop / Scan / Film Supply / Cameras</span>
-    </header>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saujana Film Lab — Kuala Lumpur &amp; Bali</title>
+    <meta
+      name="description"
+      content="Film developing, scanning, supplies, and cameras at Saujana Film Lab in Kuala Lumpur and Bali."
+    />
+    <meta property="og:title" content="Saujana Film Lab — Kuala Lumpur &amp; Bali" />
+    <meta
+      property="og:description"
+      content="Film developing, scanning, supplies, and cameras at Saujana Film Lab in Kuala Lumpur and Bali."
+    />
+    <meta property="og:image" content="https://saujanalab.com/og.png?v=1" />
+    <meta property="og:url" content="https://saujanalab.com/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="saujanaicon.png?v=1" />
+    <link rel="apple-touch-icon" href="saujanaicon.png?v=1" />
+    <link rel="stylesheet" href="styles.css?v=1" />
+  </head>
+  <body>
     <main>
-      <section>
-        <p class="eyebrow">Website coming soon</p>
-        <h1>Film lab work, from Kuala Lumpur to Bali.</h1>
-        <p class="lead">
-          Our full site is being processed. In the meantime, you can reach either lab directly for film developing,
-          scanning, supplies, cameras, order questions, and anything that needs a human on the other side.
-        </p>
-        <div class="status">Online soon</div>
+      <svg
+        class="logo-filters"
+        aria-hidden="true"
+        focusable="false"
+        width="0"
+        height="0"
+      >
+        <filter id="logo-classic-tint" color-interpolation-filters="sRGB">
+          <feColorMatrix
+            type="matrix"
+            values="
+              0 0 0 0 0.788235
+              0 0 0 0 0.631373
+              0 0 0 0 0.360784
+              0 0 0 1 0
+            "
+          />
+        </filter>
+      </svg>
+
+      <div class="film-frame" aria-hidden="true">
+        <div class="film-edge">
+          <span>SAUJANA FILM LAB</span>
+          <span id="film-year"></span>
+          <span id="film-month"></span>
+          <span id="film-day"></span>
+        </div>
+        <div class="sprockets"></div>
+      </div>
+
+      <section class="hero">
+        <header class="masthead">
+          <img class="logo" src="saujana-logo.png" alt="Saujana Film Lab" />
+          <span class="roll-number">ROLL 00 / KL + BALI</span>
+        </header>
+
+        <div class="hero-copy">
+          <p class="eyebrow">DEVELOPING · SCANNING · FILM SUPPLIES · CAMERAS</p>
+          <h1>
+            Hey, you’ve found the lab.
+            <span>Come over!</span>
+          </h1>
+          <p class="intro">
+            Developing, scanning, supplies, cameras, and the occasional
+            suspiciously long conversation about grain. Choose your nearest lab
+            and we’ll take it from there.
+          </p>
+        </div>
+
+        <nav class="lab-picker" aria-label="Choose a lab">
+          <a href="#kuala-lumpur">
+            <span>Kuala Lumpur</span>
+            <b aria-hidden="true">↗</b>
+          </a>
+          <a href="#bali">
+            <span>Bali</span>
+            <b aria-hidden="true">↗</b>
+          </a>
+        </nav>
+
+        <div class="scroll-cue" aria-hidden="true">
+          CHOOSE YOUR LAB <span>↓</span>
+        </div>
       </section>
 
-      <section class="labs" aria-label="Saujana Film Lab locations">
-        <article class="lab">
-          <div class="lab-head">
-            <div>
-              <h2 class="city">Kuala Lumpur</h2>
-              <p class="country">Malaysia</p>
-            </div>
-            <span class="tag">KL Lab</span>
-          </div>
-          <p class="meta">
-            16, Lorong 1/77a, Imbi, 2nd Floor, 55100 Kuala Lumpur<br />
-            Working hours: 11am-8pm, closed every Friday
-          </p>
-          <div class="actions">
-            <a class="action" href="https://www.instagram.com/saujanafilmlab" target="_blank" rel="noopener">
-              <span><strong>Instagram</strong><span>@saujanafilmlab</span></span><span class="arrow">-></span>
-            </a>
-            <a class="action" href="https://wa.me/601159348334" target="_blank" rel="noopener">
-              <span><strong>WhatsApp</strong><span>+60 11 5934 8334</span></span><span class="arrow">-></span>
-            </a>
-            <a class="action" href="https://maps.app.goo.gl/UV6F17TZtRTTgCM9A" target="_blank" rel="noopener">
-              <span><strong>Location</strong><span>Open in Maps</span></span><span class="arrow">-></span>
-            </a>
-          </div>
-        </article>
+      <section class="locations" aria-labelledby="locations-heading">
+        <div class="section-heading">
+          <p class="eyebrow">THE LABS</p>
+          <h2 id="locations-heading">Pick your drop-off.</h2>
+        </div>
 
-        <article class="lab">
-          <div class="lab-head">
-            <div>
-              <h2 class="city">Bali</h2>
-              <p class="country">Indonesia</p>
+        <div class="location-grid">
+          <article class="location-card" id="kuala-lumpur">
+            <div class="card-topline">
+              <p>01 / Malaysia</p>
+              <span>KL</span>
             </div>
-            <span class="tag">Bali Lab</span>
-          </div>
-          <p class="meta">
-            Jl. Pantai Batu Bolong No.25, Canggu, Kec. Kuta Utara, Kabupaten Badung, Bali 80361<br />
-            Working hours: 11am-8pm, closed every Sunday
-          </p>
-          <div class="actions">
-            <a class="action" href="https://www.instagram.com/saujanabali" target="_blank" rel="noopener">
-              <span><strong>Instagram</strong><span>@saujanabali</span></span><span class="arrow">-></span>
+
+            <h3>Kuala Lumpur</h3>
+
+            <div class="lab-facts">
+              <div class="fact-block">
+                <p class="fact-label">LOCATION</p>
+                <address>
+                  <span>16, Lorong 1/77a, Imbi, 2nd Floor</span>
+                  <span>55100 Kuala Lumpur</span>
+                </address>
+              </div>
+
+              <div class="fact-block">
+                <p class="fact-label">HOURS</p>
+                <dl class="hours">
+                  <div>
+                    <dt>Monday—Thursday</dt>
+                    <dd>11:00—20:00</dd>
+                  </div>
+                  <div class="closed">
+                    <dt>Friday</dt>
+                    <dd>Closed</dd>
+                  </div>
+                  <div>
+                    <dt>Saturday—Sunday</dt>
+                    <dd>11:00—20:00</dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+
+            <a class="primary-link" href="https://kl.saujanalab.com/">
+              <span>Visit Kuala Lumpur lab</span>
+              <b aria-hidden="true">↗</b>
             </a>
-            <a class="action" href="https://wa.me/6282251318377" target="_blank" rel="noopener">
-              <span><strong>WhatsApp</strong><span>+62 822 5131 8377</span></span><span class="arrow">-></span>
+
+            <div class="utility-links">
+              <a href="https://wa.me/601159318334" target="_blank" rel="noreferrer">
+                WhatsApp <span>+60 11-5931 8334</span>
+              </a>
+              <a
+                href="https://maps.app.goo.gl/UV6F17TZtRTTgCM9A"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Directions <span>Open in Maps ↗</span>
+              </a>
+              <a
+                href="https://www.instagram.com/saujanafilmlab/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Instagram <span>@saujanafilmlab ↗</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="location-card" id="bali">
+            <div class="card-topline">
+              <p>02 / Indonesia</p>
+              <span>BALI</span>
+            </div>
+
+            <h3>Bali</h3>
+
+            <div class="lab-facts">
+              <div class="fact-block">
+                <p class="fact-label">LOCATION</p>
+                <address>
+                  <span>Jl. Pantai Batu Bolong No.25, Canggu</span>
+                  <span>Kec. Kuta Utara, Kabupaten Badung, Bali 80361</span>
+                </address>
+              </div>
+
+              <div class="fact-block">
+                <p class="fact-label">HOURS</p>
+                <dl class="hours">
+                  <div>
+                    <dt>Monday—Saturday</dt>
+                    <dd>11:00—20:00</dd>
+                  </div>
+                  <div class="closed">
+                    <dt>Sunday</dt>
+                    <dd>Closed</dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+
+            <a class="primary-link" href="https://bali.saujanalab.com/">
+              <span>Visit Bali lab</span>
+              <b aria-hidden="true">↗</b>
             </a>
-            <a class="action" href="https://maps.app.goo.gl/H38uTnSvUzwK8uKa6" target="_blank" rel="noopener">
-              <span><strong>Location</strong><span>Open in Maps</span></span><span class="arrow">-></span>
-            </a>
-          </div>
-        </article>
+
+            <div class="utility-links">
+              <a href="https://wa.me/6282251318377" target="_blank" rel="noreferrer">
+                WhatsApp <span>+62 822-5131-8377</span>
+              </a>
+              <a
+                href="https://maps.app.goo.gl/5SidyawAcgiMiHzW7"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Directions <span>Open in Maps ↗</span>
+              </a>
+              <a
+                href="https://www.instagram.com/saujanabali/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Instagram <span>@saujanabali ↗</span>
+              </a>
+            </div>
+          </article>
+        </div>
       </section>
+
+      <footer>
+        <img class="footer-logo" src="saujana-logo.png" alt="" />
+        <p>DEVELOPED WITH CARE IN KUALA LUMPUR &amp; BALI.</p>
+        <p>THANK YOU FOR KEEPING FILM ALIVE.</p>
+        <a href="mailto:hello@saujanalab.com">hello@saujanalab.com</a>
+      </footer>
+
+      <div class="film-frame bottom-frame" aria-hidden="true">
+        <div class="sprockets"></div>
+        <div class="film-edge">
+          <span>4 ▶</span>
+          <span>SAUJANA FILM LAB</span>
+          <span>••••••••••••••••</span>
+          <span>5 ▶</span>
+        </div>
+      </div>
     </main>
 
-    <footer class="footer">
-      <span>Saujana Film Lab</span>
-      <span>Website in development</span>
-    </footer>
-  </div>
-</body>
+    <script>
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Asia/Kuala_Lumpur",
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+      }).formatToParts(new Date());
+      const value = (type) => parts.find((part) => part.type === type)?.value || "";
+      document.getElementById("film-year").textContent = value("year");
+      document.getElementById("film-month").textContent = value("month").toUpperCase();
+      document.getElementById("film-day").textContent = value("day");
+    </script>
+  </body>
 </html>
