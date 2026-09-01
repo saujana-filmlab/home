@@ -1,5 +1,5 @@
-const CACHE_NAME = "the-garage-v3";
-const APP_SHELL = ["/garage/", "/garage/manifest.webmanifest", "/garage/saujana-logo.png", "/garage/ilford-id11.svg", "/garage/developing-tank.png", "/garage/app-icon-192.png", "/garage/app-icon-512.png"];
+const CACHE_NAME = "the-garage-v4";
+const APP_SHELL = ["/garage/", "/garage/manifest.webmanifest", "/garage/saujana-logo.png", "/garage/ilford-id11.svg", "/garage/developing-tank.png", "/garage/the-garage-favicon.png", "/garage/og.png", "/garage/app-icon-192.png", "/garage/app-icon-512.png"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)).catch(() => undefined));

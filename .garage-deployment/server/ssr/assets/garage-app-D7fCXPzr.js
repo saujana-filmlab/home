@@ -455,6 +455,31 @@ var DEFAULT_SETTINGS = {
 	vibration: true
 };
 var APP_BASE_PATH = "/garage";
+function parseNumericInput(value) {
+	if (value.trim() === "") return "";
+	const parsed = Number(value);
+	return Number.isFinite(parsed) ? parsed : "";
+}
+function minutesFromSeconds(value) {
+	return value === "" ? "" : value / 60;
+}
+function resolveWorkflowSettings(settings) {
+	if ([
+		settings.stopBathSeconds,
+		settings.fixSeconds,
+		settings.washSeconds,
+		settings.photoFloSeconds,
+		settings.drainWarningSeconds
+	].some((value) => typeof value !== "number" || !Number.isFinite(value))) return null;
+	return {
+		...settings,
+		stopBathSeconds: settings.stopBathSeconds,
+		fixSeconds: settings.fixSeconds,
+		washSeconds: settings.washSeconds,
+		photoFloSeconds: settings.photoFloSeconds,
+		drainWarningSeconds: settings.drainWarningSeconds
+	};
+}
 function createStages(result, settings) {
 	return [
 		{
@@ -658,7 +683,9 @@ function GarageApp() {
 	const saveCustomRecipe = async () => {
 		const filmName = recipeDraft.filmName.trim();
 		const manufacturer = recipeDraft.manufacturer.trim();
-		if (!filmName || !manufacturer || !Number.isFinite(recipeDraft.exposureIndex) || recipeDraft.exposureIndex <= 0 || !Number.isFinite(recipeDraft.baseMinutes) || recipeDraft.baseMinutes <= 0) {
+		const exposureIndex = recipeDraft.exposureIndex;
+		const baseMinutes = recipeDraft.baseMinutes;
+		if (!filmName || !manufacturer || typeof exposureIndex !== "number" || exposureIndex <= 0 || typeof baseMinutes !== "number" || baseMinutes <= 0) {
 			setError("Add the manufacturer, film name, ISO, and tested base time before saving the recipe.");
 			return;
 		}
@@ -671,10 +698,10 @@ function GarageApp() {
 				"Sheet"
 			],
 			exposureLabel: recipeDraft.exposureLabel,
-			exposureIndex: recipeDraft.exposureIndex,
+			exposureIndex,
 			developer: "ILFORD ID-11",
 			dilution: "Stock",
-			baseSeconds: Math.round(recipeDraft.baseMinutes * 60),
+			baseSeconds: Math.round(baseMinutes * 60),
 			referenceTemperatureC: 20,
 			validatedTemperatureRangeC: [20, 24],
 			temperatureMethod: "ilford_10_percent_per_celsius",
@@ -709,6 +736,7 @@ function GarageApp() {
 		try {
 			const recipe = availableRecipes.find((item) => item.id === recipeId);
 			if (!recipe) throw new Error("Choose a film with a stored exposure recipe.");
+			if (typeof temperature !== "number" || temperature < 20 || temperature > 25.5) throw new Error("Enter a chemistry temperature from 20°C to 25.5°C.");
 			const load = batchLoad(filmNumber, rollsAtOnce);
 			const calculation = calculateDevelopmentTime({
 				baseSeconds: recipe.baseSeconds,
@@ -738,7 +766,12 @@ function GarageApp() {
 		setManualOverrideOpen(false);
 	};
 	const startRun = () => {
-		if (!result) return;
+		const runSettings = resolveWorkflowSettings(settings);
+		if (!result || typeof temperature !== "number") return;
+		if (!runSettings) {
+			setError("Complete every workflow timing field before starting the timer.");
+			return;
+		}
 		setGuideEndedEarly(false);
 		setSession({
 			result,
@@ -746,7 +779,7 @@ function GarageApp() {
 			filmNumber,
 			rollsAtOnce,
 			format,
-			settings,
+			settings: runSettings,
 			stageIndex: 0,
 			duration: 0,
 			remaining: 0,
@@ -980,7 +1013,7 @@ function GarageApp() {
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 									className: "film-field-help",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("strong", { children: [filmOptions.length, " FILMS AVAILABLE"] }), availableRecipes.length ? " · Stored ID-11 timing found." : " · No stored ID-11 timing yet."] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("strong", { children: [filmOptions.length, " FILM RECIPES AVAILABLE"] }) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 										type: "button",
 										onClick: openCustomRecipe,
 										children: "+ ADD NEW FILM RECIPE"
@@ -1040,7 +1073,7 @@ function GarageApp() {
 											value: recipeDraft.exposureIndex,
 											onChange: (event) => setRecipeDraft((draft) => ({
 												...draft,
-												exposureIndex: Number(event.target.value)
+												exposureIndex: parseNumericInput(event.target.value)
 											}))
 										})] }),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "BASE TIME AT 20°C" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -1052,7 +1085,7 @@ function GarageApp() {
 												value: recipeDraft.baseMinutes,
 												onChange: (event) => setRecipeDraft((draft) => ({
 													...draft,
-													baseMinutes: Number(event.target.value)
+													baseMinutes: parseNumericInput(event.target.value)
 												}))
 											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: "MIN" })]
 										})] }),
@@ -1142,7 +1175,7 @@ function GarageApp() {
 											step: "0.5",
 											value: temperature,
 											onChange: (event) => {
-												setTemperature(Number(event.target.value));
+												setTemperature(parseNumericInput(event.target.value));
 												setResult(null);
 											}
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "°C" })]
@@ -1163,7 +1196,7 @@ function GarageApp() {
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 							className: "roll-selector",
-							"aria-label": `The first roll in this load is film number ${filmNumber} of 10`,
+							"aria-label": `Development time uses roll ${filmNumber} of this batch`,
 							children: Array.from({ length: 10 }, (_, index) => index + 1).map((number) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 								className: number === filmNumber ? "is-selected" : "",
 								type: "button",
@@ -1238,7 +1271,7 @@ function GarageApp() {
 											min: "0",
 											step: "5",
 											value: settings.drainWarningSeconds,
-											onChange: (event) => updateSetting("drainWarningSeconds", Number(event.target.value))
+											onChange: (event) => updateSetting("drainWarningSeconds", parseNumericInput(event.target.value))
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: "SEC" })]
 									})] }),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "FIX" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -1246,8 +1279,11 @@ function GarageApp() {
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
 											type: "number",
 											min: "1",
-											value: settings.fixSeconds / 60,
-											onChange: (event) => updateSetting("fixSeconds", Number(event.target.value) * 60)
+											value: minutesFromSeconds(settings.fixSeconds),
+											onChange: (event) => {
+												const value = parseNumericInput(event.target.value);
+												updateSetting("fixSeconds", value === "" ? "" : value * 60);
+											}
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: "MIN" })]
 									})] }),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "WASH" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -1255,8 +1291,11 @@ function GarageApp() {
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
 											type: "number",
 											min: "1",
-											value: settings.washSeconds / 60,
-											onChange: (event) => updateSetting("washSeconds", Number(event.target.value) * 60)
+											value: minutesFromSeconds(settings.washSeconds),
+											onChange: (event) => {
+												const value = parseNumericInput(event.target.value);
+												updateSetting("washSeconds", value === "" ? "" : value * 60);
+											}
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: "MIN" })]
 									})] }),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "PHOTO-FLO" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -1266,7 +1305,7 @@ function GarageApp() {
 											min: "5",
 											step: "5",
 											value: settings.photoFloSeconds,
-											onChange: (event) => updateSetting("photoFloSeconds", Number(event.target.value))
+											onChange: (event) => updateSetting("photoFloSeconds", parseNumericInput(event.target.value))
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: "SEC" })]
 									})] }),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", {
@@ -1325,9 +1364,9 @@ function GarageApp() {
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dt", { children: "BASE AT 20°C" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("dd", { children: formatTime(result.recipe.baseSeconds) })] }),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dt", { children: "TEMPERATURE" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("dd", { children: temperature === 20 ? "NO CHANGE" : `${Math.round((result.temperatureFactor - 1) * 100)}% → ${formatTime(result.temperatureAdjustedSeconds)}` })] }),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("dt", { children: [
-									"FIRST ROLL ",
+									"ROLL ",
 									filmNumber,
-									" OF THIS LITER"
+									" OF THIS BATCH"
 								] }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("dd", { children: [
 									"+",
 									Math.round((result.capacityMultiplier - 1) * 100),
@@ -1530,9 +1569,9 @@ function GarageApp() {
 								record.exposureIndex,
 								" · ",
 								record.format,
-								" · FIRST ROLL ",
+								" · ROLL ",
 								record.filmNumber,
-								"/10 · ",
+								" OF THIS BATCH · ",
 								record.rollsAtOnce ?? 1,
 								" IN TANK"
 							] })
@@ -1641,9 +1680,9 @@ function TimerView({ session, stage, stages, remaining, stageComplete, onPauseRe
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dt", { children: "DEVELOPER" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("dd", { children: "ILFORD ID-11 STOCK" })] }),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dt", { children: "TEMPERATURE" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("dd", { children: [session.temperature, "°C"] })] }),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dt", { children: "DEV TIME USES" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("dd", { children: [
-									"FIRST ROLL ",
+									"ROLL ",
 									session.filmNumber,
-									" / 10"
+									" OF THIS BATCH"
 								] })] }),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dt", { children: "ROLLS IN TANK" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("dd", { children: session.rollsAtOnce ?? 1 })] }),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("dt", { children: "BLACKBOARD AFTER" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("dd", { children: batchLoad(session.filmNumber, session.rollsAtOnce ?? 1).blackboardTotal })] })
