@@ -11665,7 +11665,7 @@ var client_references_default = {
 		};
 	},
 	"986b12911ae9": async () => {
-		const m = await import("./assets/garage-app-DOoCxQJl.js");
+		const m = await import("./assets/garage-app-CC6lXZyI.js");
 		return { get "GarageApp"() {
 			return m["GarageApp"];
 		} };
