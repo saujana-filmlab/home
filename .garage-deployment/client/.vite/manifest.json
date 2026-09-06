@@ -1,6 +1,6 @@
 {
   "../../2026-07-18/we-re-building-a-contact-sheet/node_modules/.pnpm/vinext@0.0.50_@vitejs+plugi_411db1e72ff1d4e0dfb72e4a8d0c6b6d/node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "assets/layout-segment-context-4I5Y92ac.js",
+    "file": "assets/layout-segment-context-DIrzn__X.js",
     "name": "layout-segment-context",
     "src": "../../2026-07-18/we-re-building-a-contact-sheet/node_modules/.pnpm/vinext@0.0.50_@vitejs+plugi_411db1e72ff1d4e0dfb72e4a8d0c6b6d/node_modules/vinext/dist/shims/layout-segment-context.js",
     "isDynamicEntry": true,
@@ -22,7 +22,7 @@
     "name": "rolldown-runtime"
   },
   "components/garage-app.tsx": {
-    "file": "assets/garage-app-B08cIhk-.js",
+    "file": "assets/garage-app-BCmQpDx3.js",
     "name": "garage-app",
     "src": "components/garage-app.tsx",
     "isDynamicEntry": true,
@@ -32,7 +32,7 @@
     ]
   },
   "virtual:vinext-app-browser-entry": {
-    "file": "assets/index-BWepUBEp.js",
+    "file": "assets/index-DQTfiMyv.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,
